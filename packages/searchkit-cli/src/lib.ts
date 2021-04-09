@@ -64,9 +64,7 @@ export const transformDefinitionField = (field) => {
 }
 
 export const dropIndices = async (config) => {
-  const client = new Client({
-    node: config.host
-  })
+  const client = new Client(config.esconfig)
 
   try {
     await client.indices.delete({ index: config.index })
@@ -74,9 +72,7 @@ export const dropIndices = async (config) => {
 }
 
 export const createIndices = async (config) => {
-  const client = new Client({
-    node: config.host
-  })
+  const client = new Client(config.esconfig)
 
   try {
     await client.indices.create({ index: config.index })
@@ -97,9 +93,7 @@ export const getMapping = (config) => {
 }
 
 export const addMappingES7 = async (config) => {
-  const client = new Client({
-    node: config.host
-  })
+  const client = new Client(config.esconfig)
 
   try {
     await client.indices.putMapping({
@@ -138,9 +132,7 @@ export const getDocs = (config) => {
 }
 
 export const indexDocs = async (config) => {
-  const client = new Client({
-    node: config.host
-  })
+  const client = new Client(config.esconfig)
   const docs = await getDocs(config)
   try {
     const cmds = _.flatMap(docs, (doc) => [

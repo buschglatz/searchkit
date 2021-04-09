@@ -26,9 +26,11 @@ export interface SearchkitField {
 }
 
 export interface CliConfig {
-  index: string
   type?: string
-  host: string
+  index: string
+  esconfig: {
+    host: string
+  }
   source?: any
   fields: Array<SearchkitField>
 }
@@ -49,7 +51,7 @@ export const withConfig = async (config: CliConfig) => {
         const skConfig = getSearchkitConfig(config, mapping)
         const c = getSKQuickStartText({
           ...skConfig,
-          host: config.host,
+          host: config.esconfig.host,
           index: config.index,
           mapping
         })
@@ -57,7 +59,7 @@ export const withConfig = async (config: CliConfig) => {
       }
     })
 
-  if (config.host) {
+  if (config.esconfig.host) {
     await inquirer
       .prompt({
         name: 'Host detected. Destroy index and reinsert index mapping?',
